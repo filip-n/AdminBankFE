@@ -1,0 +1,278 @@
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+<section class="wrapper">
+  <ng-include src="'views/header.html'"></ng-include>
+
+  <div class="content-wrapper">
+    <div class="content-header" >
+      <div  class="form-group  pull-right"  >
+
+        <i class="fa fa-fw fa-search" ></i>
+
+
+        <ui-select ng-model="item.selected" class="pull-right" style="min-width: 300px; margin-top:-2px"  theme="select2"  on-select="fetchProducts($select.selected);TableColumns($select.selected)">
+          <ui-select-match placeholder=" {{'searchVidRabota_p' | translate}}">{{$select.selected.ProductTypeID}}-{{$select.selected.ProductID}} {{$select.selected.Description}}</ui-select-match>
+          <ui-select-choices repeat="item in products | filter: $select.search">
+            <small>
+              <spam  ng-bind-html="item.ProductTypeID  | highlight: $select.search"></spam>-
+              <spam ng-bind-html="item.ProductID  | highlight: $select.search"></spam>
+            </small>
+            <small ng-bind-html="item.Description  | highlight: $select.search"></small>
+
+          </ui-select-choices>
+        </ui-select>
+
+      </div>
+      <h1> {{'headerVidoviRabota_p' | translate}} </h1>
+
+    </div>
+
+    <div class="content">
+
+
+
+      <div class="box box-success">
+        <div class="box-header with-border">
+
+          <h3 class="box-title">
+            {{'headerSnimiZapis_p' | translate}}
+          </h3>
+
+        </div>
+
+
+      <div class="box-body">
+        <div class="row">
+          <form novalidate   name="form">
+
+            <div class="col-md-12 ">
+              <!--<form novalidate  class="css-form" name="form">-->
+              <div class="form-group col-md-2">
+                <label >{{'lblTipRabota_p' | translate}}</label>
+                <div >
+                  <!--<select ng-blur="checkTip()" class="form-control ng-touched ng-invalid ng-valid input-sm"  ng-model="Products.ProductTypeID" ng-disabled="flag" required>-->
+                    <!--<option></option>-->
+                    <!--<option ng-repeat="productType in productTypes" ng-selected= "Products.ProductTypeID==productType.ProductTypeID" value="{{productType.ProductTypeID}}"   >{{productType.ProductTypeID}}-{{productType.Description}}</option>-->
+                  <!--</select>-->
+                  <ui-select ng-blur="checkTip()"  ng-model="Products" on-select="change($select.selected)" style="width: 160px" theme="select2" ng-disabled="flag" required>
+                    <ui-select-match >{{$select.selected.ProductTypeID}}</ui-select-match>
+                    <ui-select-choices repeat="item in productTypes | filter: $select.search">
+                      <small>
+                        <spam ng-bind-html="item.ProductTypeID  | highlight: $select.search"></spam>-
+                        <spam ng-bind-html="item.Description  | highlight: $select.search"></spam>
+                      </small>
+                    </ui-select-choices>
+                  </ui-select>
+                </div>
+              </div><!-- /.form-group -->
+
+              <div class="form-group col-md-2">
+                <label>{{'lblVidRabota_p' | translate}}</label>
+                <input ng-blur="checkVid()" type="text"  class=" form-control ng-pristine ng-invalid ng-invalid-required ng-touched input-sm" mask="9" repeat="6" restrict="reject" ng-disabled="flag"  id="txtVidRabota"  ng-model="Products.ProductID" data-placement="bottom" data-type="success" data-container="body" data-trigger="focus" bs-tooltip="tooltip" required>
+              </div><!-- /.form-group -->
+
+
+              <div class="form-group col-md-3">
+                <label >{{'lblOpis_p' | translate}}</label>
+                <br/>
+                <!-- <input type="text" class="form-control" id="inputSuccess" placeholder="Опис ..." ng-model="Products.Description">-->
+                <textarea ng-blur="checkOpis()" class="form-control ng-touched ng-invalid ng-valid" rows="3"   ng-model="Products.Decsription" required></textarea>
+              </div><!-- /.form-group -->
+
+              <div class="form-group col-md-1">
+                <label>{{'lblStatus_p' | translate}}</label>
+
+                <div class="checkbox" style="padding-left: 0px ;margin-top: 0px">
+                  <label>
+                    <input  ng-model="Products.Status" ng-click="changeClosingDate()"  ng-checked="true" type="checkbox" >    {{'lblAktiven_p' | translate}}
+                  </label>
+                </div>
+              </div><!-- /.form-group -->
+
+
+              <div class="form-group col-md-2 " >
+                <label  >{{'lblDatumOtvaranje_p' | translate}}</label>
+                <div>
+                  <div class="input-group " >
+                    <input type="text" class="form-control input-sm" ng-model="Products.OpeningDate"  ng-change="test()" ng-init="init()"  restict="reject" container="body" data-date-format="dd-MM-yyyy"   data-min-date="today" data-autoclose="1" name="date1"  bs-datepicker required>
+                    <div class="input-group-addon " id="date" >
+                      <i class="fa fa-calendar"  ></i>
+                    </div>
+                  </div><!-- /.input group -->
+                </div>
+              </div><!-- /.form-group -->
+
+              <div class="form-group col-md-2" >
+                <label>{{'lblDatumZatvaranje_p' | translate}}</label>
+                  <div class="input-group" >
+                    <input type="text" class="form-control input-sm" ng-model="Products.ClosingDate" placement="auto" container="body" data-date-format="dd-MM-yyyy" data-date-type="date"  data-min-date="{{Products.OpeningDate}}" data-autoclose="1" name="date2" bs-datepicker>
+                    <div class="input-group-addon " id="date1" >
+                      <i class="fa fa-calendar"  ></i>
+                    </div>
+                  </div><!-- /.input group -->
+                </div>
+              </div><!-- /.form-group -->
+
+
+            <div class="form-horizontal col-md-12">
+                <div class="box-footer  text-right" >
+
+                  <button ng-click="cancel()" class="btn btn-default btn-sm" ><i class="fa fa-fw fa-ban"></i>{{'btnOtkazi_p' | translate}}</button>
+                  <button ng-disabled="form.$invalid || productExist" class="btn btn-success btn-sm"  style="background-color: #00a65a; " ng-click="vidRabotaSave();cancel()"><i class="fa fa-fw fa-save"></i> {{'btnSnimi_p' | translate}}</button>
+
+                </div>
+              </div>
+
+
+          </form>
+        </div><!-- /.box-body -->
+
+      </div><!-- /.box -->
+    </div>
+
+
+      <!--Insert ProductBody -->
+
+
+      <div class=" box box-success">
+          <div class="box-header with-border">
+            <h4 class="box-title">
+              {{'headerSnimiZapis_p' | translate}}
+            </h4>
+          </div>
+
+
+      <div class="box-body">
+        <div class="row">
+
+          <div class="form-horizontal col-lg-12 ">
+
+
+
+            <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+              <tr style="border:1px solid black">
+                <td>
+                  <i class="fa fa-arrow-circle-up" ng-click="up()" aria-hidden="true"></i><br/>
+                  <i class="fa fa-arrow-circle-down" ng-click="down()" aria-hidden="true"></i>
+                </td>
+                <td style="vertical-align: middle"><input type="text" ng-disabled="!hasSelected"  ng-model="productBodyNew.FieldDescription" class="form-control input-sm" id="txtLabela"   ></td>
+
+                <td style="width: 200px;vertical-align: middle">
+                  <ui-select style="width: 200px;" ng-model="productBodyNew.FieldName" on-select="polniTipDolzina($select.selected)" ng-disabled="!hasSelected" theme="select2" required >
+                    <ui-select-match placeholder="Пребарај поле...">{{$select.selected}}</ui-select-match>
+                    <ui-select-choices repeat="item in tableColumns | filter: $select.search"   >
+                      <div ng-bind-html="item |  highlight: $select.search"></div>
+
+                    </ui-select-choices>
+                  </ui-select>
+                </td>
+
+                <td style="text-align:center; vertical-align: middle;width: 50px;"><input ng-disabled="!hasSelected" type="checkbox"  id="chbMandatory" placeholder="Задолжително"  ng-model="productBodyNew.Mandatory"></td>
+
+                <td style="width: 80px;vertical-align: middle"><input  type="text" ng-disabled="true"   ng-model="productBodyNew.DataType" class="form-control input-sm" id="txtTipPodatok"   ></td>
+
+                <td style="width: 80px;vertical-align: middle"><input ng-disabled="true" type="text" class="form-control input-sm"  id="txtDollzina"   min="0"  ng-model="productBodyNew.FieldLength" ></td>
+
+                <td style="vertical-align: middle">
+                  <select ng-disabled="!hasSelected" ng-change="disableFields(productBodyNew.FieldType)" class="form-control input-sm" ng-model="productBodyNew.FieldType" required>
+                   <option></option>
+                   <option ng-repeat="fieldType in fieldTypes" ng-selected= "productBodyNew.FieldType==fieldType.Type" value="{{fieldType.Type}}">{{fieldType.Type}}</option>
+                  </select >
+                </td>
+
+                <td style="vertical-align: middle; width: 160px">
+                  <ui-select style="width: 160px"  ng-model="productBodyNew.FillApi" ng-disabled="!hasSelected|| enableAPI" theme="select2" >
+                    <ui-select-match placeholder=" {{'searchApi_p' | translate}}">{{$select.selected.ApiDescription}}</ui-select-match>
+                    <ui-select-choices repeat="item in fieldApis | filter: $select.search"   >
+                      <div ng-bind-html="item.ApiDescription  |  highlight: $select.search"></div>
+                      <small ng-bind-html="item.ApiUrl  | highlight: $select.search"></small>
+                    </ui-select-choices>
+                  </ui-select>
+                </td>
+
+                <td style="width: 140px;vertical-align: middle"><input ng-disabled="!hasSelected" type="text" ng-model="productBodyNew.DefaultValue"  class="form-control input-sm" id="txtVrednost"   ></td>
+
+
+
+
+                <td style="text-align: center;vertical-align: middle">
+                  <i  class="fa fa-floppy-o fa-lg"   ng-disabled="canAdd" ng-click="addRow(productBodyNew)" data-placement="bottom" data-type="success" data-container="body" data-trigger="focus" bs-tooltip="tooltipSave()" ></i>
+
+
+                  <i  class="fa fa-trash fa-lg"   ng-click="removeRow($index)" data-placement="bottom" data-type="success" data-container="body" data-trigger="focus" bs-tooltip="tooltipDelete" ></i>
+                </td>
+
+              </tr>
+
+
+
+
+              <tbody>
+
+
+              <tr role="row" class="main-header" style="background-color: #00A65A;color: white; font-size: 13px">
+                <th></th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{'lblLabela_p' | translate}}</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{'lblPoleTabela_p' | translate}}</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" ><div>{{'lblZad_p' | translate}}</div></th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{'lblTipPodatok_p' | translate}}</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{'lblDolzina_p' | translate}}</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{'lblTipPole_p' | translate}}</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{API}}</th>
+                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" >{{ 'lblVrednost_p' | translate}}</th>
+              <th></th>
+              </tr>
+
+
+
+
+              <tr ng-repeat="columnOption in productBody" ng-class="{'selected':$index == selectedRow}"  ng-click="setClickedRow($index); previewForEdit(columnOption);">
+                <td></td>
+                <td>{{columnOption.FieldDescription}}</td>
+                <td>{{columnOption.FieldName}}</td>
+                <td style="text-align:center; vertical-align: middle;width: 50px;">{{columnOption.Mandatory}}</td>
+                <td>{{columnOption.DataType}}</td>
+                <td >{{columnOption.FieldLength}}</td>
+                <td>{{columnOption.FieldType}}</td>
+                <td>{{columnOption.FillApi}}</td>
+                <td>{{columnOption.DefaultValue}}</td>
+                <!--<td  ><span class="glyphicon glyphicon-minus" style="color: red" ng-click="removeRow($index)"></span></td>-->
+                <td></td>
+              </tr>
+              </tbody>
+            </table>
+
+          </div>
+          <!--<div class="form-horizontal col-lg-12">-->
+            <!--<div class="box-footer text-right">-->
+
+              <!--<button type="submit" class="btn btn-default btn-sm" ng-click="cancelProductBody()"><i class="fa fa-fw fa-ban"></i> {{'btnOtkazi_p' | translate}}</button>-->
+              <!--<button class="btn btn-success btn-sm" ng-disabled="!hasSelected || !hasNew" style="background-color: #00a65a; " ng-click="AddProductBody()"><i class="fa fa-fw fa-save"></i>  {{'btnSnimi_p' | translate}}</button>-->
+
+            <!--</div>-->
+          <!--</div>-->
+
+        </div>
+      </div><!-- /.box-body -->
+      </div>
+    </div>
+  </div>
+
+  </div>
+</section>
+  <!-- Minus icon dialog open -->
+  <script type="text/ng-template" id="templateId">
+      <i class="fa fa-question-circle fa-3x fa-pull-left fa-border"  aria-hidden="true"></i>
+      <h4>Дали сте сигурни дека сакате да го избришете записот?</h4>
+      <div class=" text-right">
+        <button style="width:40px; height:30px; text-align: center" class="btn btn-warning "  ng-click="closeThisDialog()">Не</button>
+        <button style="width:40px; height:30px; text-align: center" class="btn btn-success "  ng-click="deleteRow(); closeThisDialog()">Да</button>
+
+
+      </div>
+
+  </script>
+
+
+

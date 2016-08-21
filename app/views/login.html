@@ -1,0 +1,78 @@
+<div class="login-box  " style="margin-top: 15%">
+  <div class="login-logo">
+
+  </div><!-- /.login-logo -->
+
+  <div class="login-box-body " >
+    <p class="login-box-msg">Најавете се:</p>
+    <form novalidate class="css-form"name="form" ng-submit="login()">
+      <div class="row">
+
+      <div class="form-group has-feedback">
+        <!--<input type="text" class="form-control" required placeholder="Корисничко име" ng-model="loginData.username">-->
+        <!--<span class="glyphicon glyphicon-envelope form-control-feedback"></span>-->
+        <div class="col-md-3">
+          <label style="text-align: right; vertical-align: middle;">Банка:</label>
+        </div>
+        <div class="col-md-9">
+          <input type="text" class="input-sm  form-control ng-invalid-required" mask="9" repeat="3" restrict="reject" ng-model="loginData.Banka"  required />
+        </div>
+
+      </div>
+        <br/>
+
+      <div class="form-group has-feedback">
+        <!--<input type="password" class="form-control" required placeholder="Лозинка" ng-model="loginData.password">-->
+        <!--<span class="glyphicon glyphicon-lock form-control-feedback"></span>-->
+
+        <div class="col-md-3">
+          <label style="text-align: right; vertical-align: middle;">Оператор:</label>
+        </div>
+        <div class="col-md-9">
+          <input type="text" class="input-sm form-control ng-invalid-required" mask="9" repeat="3" restrict="reject"  ng-model="loginData.Operator"  required />
+        </div>
+
+      </div>
+        <br/>
+      <div class="form-group has-feedback">
+        <!--<input type="password" class="form-control" required placeholder="Лозинка" ">-->
+        <!--<span class="glyphicon glyphicon-lock form-control-feedback"></span>-->
+        <div class="col-md-3" >
+          <label style="text-align: right; vertical-align: middle;">Лозинка:</label>
+        </div>
+        <div class="col-md-9">
+          <input type="password" class="input-sm form-control ng-invalid-required" ng-model="loginData.Lozinka"  required />
+        </div>
+
+
+      </div>
+        <br/>
+      <div class="form-group has-feedback">
+        <div class="col-md-3">
+          <label style="text-align: right; vertical-align: middle;" >Датум:</label>
+        </div>
+        <div class="col-md-9">
+          <input type="text"class="input-sm form-control ng-invalid-required" ng-model="loginData.Datum" placement="auto" container="body" data-date-format="dd-MM-yyyy" data-date-type="date"  data-min-date="today" data-autoclose="1" name="date2" required bs-datepicker>
+        </div>
+
+      </div>
+        <br/>
+
+
+      </div>
+      <div class="row"> <div class="col-xs-8"> </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <button type="submit" ng-disabled="form.$invalid" class="btn btn-success btn-block btn-flat">Најава<!--Sign In--></button>          </div>
+        <!-- /.col -->
+      </div>
+    </form>
+
+
+
+    <!--<a href="register.html" class="text-center">Register a new membership</a>-->
+
+  </div><!-- /.login-box-body -->
+</div><!-- /.login-box -->
+
+

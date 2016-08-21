@@ -1,0 +1,126 @@
+<span ng-controller="HeaderCtrl">
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="#/" class="logo" >
+
+      <span class="logo-lg" data-fittext data-fittext-max="17"><img src="images/logo_new.png" style=" width: 100%; margin: 0px; padding: 0px;"/></span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top"  role="navigation">
+
+      <div><image class="img-circle" style=" width: 18px;float: right;height: 18px;" src="images/macedonian.png" ng-click="changeLang('mk')"></image></div>
+      <div><image class="img-circle" style="margin-right: 5px;width: 18px;float: right;height: 18px;" src="images/english.png" ng-click="changeLang('en')"></image></div>
+
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" style="color: black"  data-toggle="offcanvas"  role="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar" ></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+
+
+      <div class="navbar-custom-menu">
+
+        <ul class="nav navbar-nav">
+
+          <!-- User Account: style can be found in dropdown.less -->
+
+          <li class="dropdown user user-menu">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="images/User_Circle.png" class="user-image" alt="User Image"/>
+              <span class="hidden-xs" style="color: #222d32;">{{loggedUser.Ime}} {{loggedUser.Prezime}}</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+
+              <li class="user-header">
+                <img src="images/User_Circle.png" class="img-circle" alt="User Image"/>
+                <p>
+                  {{loggedUser.Ime}} {{loggedUser.Prezime}} - {{loggedUser.Pozicija}}
+                  <small>{{loggedUser.Naziv}}</small>
+                </p>
+              </li>
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="#/changepass" class="btn btn-default btn-flat">Промени лозинка</a>
+
+                </div>
+                <div class="pull-right">
+                  <a ng-click="logOut()" class="btn btn-default btn-flat">Одјави се</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+    </nav>
+  </header>
+
+  <aside class="main-sidebar">
+    <section class="sidebar">
+      <div class="user-panel">
+
+        <div class="pull-left image">
+          <img src="images/User_Circle.png" class="img-circle-sm" alt="User Image" />
+        </div>
+        <div class="pull-left info">
+          <p style="font-size: 11px">{{loggedUser.Ime}} {{loggedUser.Prezime}}</p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+
+      <div style="height: 3px"></div>
+      <ul class="sidebar-menu">
+        <li class="header"></li>
+        <li class="treeview">
+          <a href="/#/tip-rabota/create">
+            <i class="fa fa-dashboard"></i> <span>{{'lblHeaderTip_pt' | translate}} </span>
+          </a>
+
+        </li>
+        <li class="treeview">
+          <a href="/#/vid-rabota/create">
+            <i class="fa fa-dashboard"></i> <span>{{'meniVidoviRabota_p' | translate}}</span>
+          </a>
+
+        </li>
+
+        <li class="treeview">
+          <a href="#/komitenti">
+            <i class="fa fa-users" aria-hidden="true"></i> <span> Комитенти </span>
+          </a>
+        </li>
+        <li class="treeview">
+          <a href="#/partii">
+            <i class="fa fa-credit-card" aria-hidden="true"></i><span> Партии </span>
+          </a>
+        </li>
+
+        <li class="treeview">
+          <a href="#/adminBaranja">
+            <i class="fa fa-file-text-o" aria-hidden="true"></i> <span> Внесување на барања </span>
+          </a>
+        </li>
+
+        <li class="treeview">
+          <a href="#/odobruvanjeBaranja">
+            <i class="fa fa-file-text-o" aria-hidden="true"></i><span> Одобрување на барања </span>
+          </a>
+        </li>
+
+      </ul>
+
+
+
+
+    </section>
+
+  </aside>
+
+
+</span>
+
+<script src="/scripts/LTEapp.js"></script>

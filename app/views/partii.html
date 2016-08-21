@@ -1,0 +1,92 @@
+<section class="wrapper" >
+
+  <ng-include src="'views/header.html'"></ng-include>
+  <!-- Content Header (Page header) -->
+
+  <div class="content-wrapper">
+
+    <div class="content-header" >
+      <h1 >Партии</h1>
+    </div>
+
+    <div class="content" >
+
+      <div class=" box box-success  ">
+        <div class="box-header with-border">
+          <h3 class="box-title">Сними запис</h3>
+        </div>
+
+        <div class=" box-body" >
+
+          <div class="row">
+            <form novalidate class="css-form" name="form">
+              <div class="col-md-12 "  >
+                          <div class="row ">
+                            <div class="col-lg-6">
+                              <div class="input-group">
+                                <div class="input-group-btn">
+                                  <button type="button"  class="btn btn-default dropdown-toggle "  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{{valueForSearch}}<span class="caret"></span></button>
+
+                                  <ul class="dropdown-menu">
+                                  <li><a ng-click="changeValue(0)">Единствен број</a></li>
+                                  <li><a  ng-click="changeValue(1)">Партија</a></li>
+                                  </ul>
+                                </div>
+                                <input placeholder="Пребарај..." ng-model="SearchValue" ng-show="a"  type="text" class="form-control ng-invalid-required " mask="9" repeat="13" restrict="reject" reguired>
+                                <input placeholder="Пребарај..." ng-model="SearchValue" ng-show="!a"  type="text" class="form-control ng-invalid-required"  mask="9" repeat="15" restrict="reject" required>
+                                <div class="input-group-addon " id="date" >
+                                <i class="fa fa-search" ng-click="searchRecord(SearchValue)" data-placement="bottom" data-type="success" data-container="body" data-trigger="focus" bs-tooltip="tooltip"></i>
+                                </div>
+                              </div>
+
+                            </div>
+
+
+
+
+                            <div class="col-md-6 form-group">
+                              <select class="form-control ng-touched ng-invalid  "  ng-change="fetchPartija();setVisibility()"  ng-model="selectedPartija" >
+
+                                <option ng-repeat="partija in Partii" value="{{partija}}"  >Единствен број: {{partija.EdinstvenBroj}} - Партија: {{partija.Partija}} </option>
+                              </select>
+
+                            </div>
+                          </div>
+                </div>
+
+
+              <!--<div class=" row col-md-12 box-header pull-right ">-->
+                <!--<button class="btn btn-default text-right pull-right btn-sm" style="color:white; background-color: #3c8dbc; float:right; margin-right: 15px;" ng-click=" setVisibility()" ng-disabled="Flag_Prikazhi">  Прикажи </button>-->
+              <!--</div>-->
+              <div class="col-md-12">
+                <div class="row" ng-show="flagVisibilityInput">
+                  <div class=" col-md-3 form-group pull-right">
+                    <label >Минимален број потписници:</label>
+                    <input placeholder="" ng-model="epartii.MinBrojPotpisnici" min="1" ng-init="MinBrojPotpisnici=1"   type="number" class="form-control ng-invalid-required input-sm" reguired>
+                  </div>
+
+
+                </div>
+
+                </div>
+              <div class=" row col-md-12 box-header pull-right " ng-show="flagVisibilityInput">
+                <button class="btn btn-success text-right btn-sm" style="float:right; margin-right: 15px;" ng-click="snimi()" ng-disabled="">  Сними </button>
+              </div>
+
+
+
+            </form>
+
+
+
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+

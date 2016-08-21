@@ -1,0 +1,18 @@
+
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+<div class="" >
+	      <div class="">
+		  	  <div class="form-group  pull-right">
+		  		 <i class="fa fa-fw fa-search" ></i>
+		  		 <ui-select ng-model="item.selected" class="pull-right" style="min-width: 300px; "  theme="select2" ng-init="fetchProducts_searchByType()"  on-select="sendConcatenatedIDs($select.selected);">
+		           <ui-select-match placeholder="Пребарај по Tип на работа/Вид на работа...">{{$select.selected.Spoeni_VidTipRabota}}-{{$select.selected.Description}}</ui-select-match>
+		            <ui-select-choices repeat="item in Products | filter: $select.search">
+			            <div ng-bind-html="item.Spoeni_VidTipRabota  |  highlight: $select.search"></div>
+			            <small ng-bind-html="item.Description  | highlight: $select.search"></small>
+					</ui-select-choices>
+				 </ui-select>
+		      </div>
+		  </div>
+</div>

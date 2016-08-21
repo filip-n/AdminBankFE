@@ -1,0 +1,118 @@
+
+  <div >
+
+      <div>
+        <div ng-repeat="item in productbody track by item.ProductBodyID ">
+
+          <!--************************************* Textbox ***************************************************-->
+          <div class="row "    ng-if="item.FieldType=='oTextBox' ">
+            <label class=" col-md-2 control-label " >{{item.FieldDescription}}</label>
+            <div class="col-md-2 ">
+              <input ng-disabled="isdisabled"  class="form-control ng-touched ng-invalid-required  input-sm "  ng-required="{{item.Mandatory=='М'}}" dynamic-model="'obj.'+'o'+item.ProductID+'.'+item.FieldName" type="{{item.FieldType}}" maxlength="{{item.FieldLength}}" value="{{item.DefaultValue}}" />
+
+            </div>
+
+          </div>
+          <br/>
+          <!--************************************** Number *********************************************-->
+          <div class="row "    ng-if="item.FieldType=='Number' ">
+
+            <label class=" col-md-2 control-label ">{{item.FieldDescription}}</label>
+            <div class="col-md-2 ">
+              <input class="form-control ng-touched ng-invalid-required ng-valid " ng-required="{{item.Mandatory=='М'}}" dynamic-model="'obj.'+'o'+item.ProductID+'.'+item.FieldName"  type="{{item.FieldType}}" min="0" maxlength="{{item.FieldLength}}" value="{{item.DefaultValue}}" />
+            </div>
+          </div>
+          <!--*********************************** Input-Number *****************************************-->
+          <div class="row "  ng-if="item.FieldType=='Input-Number' ">
+            <label class=" col-md-2 control-label ">{{item.FieldDescription}}</label>
+            <div class="col-md-2 ">
+              <input class="form-control ng-touched ng-invalid-required ng-valid" ng-required="{{item.Mandatory=='М'}}" dynamic-model="'obj.'+'o'+item.ProductID+'.'+item.FieldName"  type="text" mask="9"  restrict="reject"  repeat="{{item.FieldLength}}"   />
+            </div>
+          </div>
+
+
+          <!--************************************** Datepicker ********************************88-->
+          <div class="row"    ng-if="item.FieldType=='oDatepicker' ">
+
+            <label class=" col-md-2 control-label ">{{item.FieldDescription}}</label>
+            <div class="col-md-2 ">
+              <div class=" input-group ">
+                <input  dynamic-model="'obj.'+'o'+item.ProductID+'.'+item.FieldName" ng-required="{{item.Mandatory=='М'}}" class="form-control ng-touched ng-invalid ng-valid" type="{{item.FieldType}}" ng-change="filter( item.FieldName )"  container="body" data-date-format="dd-MM-yyyy" data-date-type="date" data-autoclose="1" bs-datepicker />
+                <div class="input-group-addon " id="date" >
+                  <i class="fa fa-calendar"  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Textarea -->
+          <div class="row "ng-model="item.FieldName"  ng-if="item.FieldType=='oTextarea' ">
+
+            <label class=" col-md-2 control-label ">{{item.FieldDescription}}</label>
+            <div class="col-md-2 ">
+              <textarea class="form-control ng-touched ng-invalid-required ng-valid" ng-required="{{item.Mandatory=='М'}}" dynamic-model="'obj.o'+item.ProductID+'.'+item.FieldName" rows="3"   ></textarea>
+            </div>
+          </div>
+
+          <!-- Checkbox-->
+          <!-- {{temp}} -->
+          <div class="row "  ng-if="item.FieldType=='oCheckBox' ">
+
+            <label class=" col-md-2 control-label ">{{item.FieldDescription}}</label>
+            <div class="col-md-1 ">
+              <input ng-disabled="checkIsDisabled(this, disableall)" dynamic-model="'obj.'+'o'+item.ProductID+'.'+item.FieldName"  ng-init="getStatus(this)"  type="checkbox"  >
+            </div>
+
+          </div>
+
+
+          <!-- Dropdown -->
+          <div class="row "  ng-if="item.FieldType=='oDropDown' ">
+
+            <label class=" col-md-2 control-label">{{item.FieldDescription}}</label>
+            <div class="col-md-3 " >
+
+              <ui-select dynamic-model="'obj.'+'o'+item.ProductID+'.'+item.FieldName" ng-required="{{item.Mandatory=='М'}}" style="width: 267px;" ng-model="temp"  theme="select2"  >
+
+                <ui-select-match placeholder="{{item.DefaultValue}}"></ui-select-match>
+
+                <ui-select-choices repeat="temp in item.ControlType  | filter: $select.search">
+
+                  <div ng-repeat="tmp in temp">
+                    <div ng-bind-html="tmp |  highlight: $select.search"></div>
+                  </div>
+
+                </ui-select-choices>
+              </ui-select>
+
+            </div>
+
+          </div>
+
+          <!-- Buttons-->
+
+          <div class="col-md-4"   ng-if=" item.FieldType=='oButtonCancel' ">
+            <div class="pull-right"  >
+              <button class="btn btn-default" value="{{item.DefaultValue}}" ><i class="fa fa-fw fa-ban"></i>{{item.DefaultValue}}</button>
+
+            </div>
+          </div>
+          <div class="col-md-2" style="padding-left: 0px;"  ng-if=" item.FieldType=='oButtonSuccess' ">
+            <div class="pull-left" >
+              <button class="btn btn-success " ng-disabled="form.$invalid" ng-click="submit(item.FillApi)" style="background-color: #00a65a; "   value="{{item.DefaultValue}}" ><i class="fa fa-fw fa-save"></i> {{item.DefaultValue}}</button>
+
+            </div>
+          </div>
+
+
+
+
+
+        </div>
+
+
+      </div>
+
+
+
+
+  </div>

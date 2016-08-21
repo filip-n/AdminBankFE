@@ -1,0 +1,103 @@
+body{
+  height:100% !important;
+}
+
+input.ng-touched.ng-invalid{
+  border: 1.5px solid #dd4b39;
+}
+
+
+textarea.ng-invalid{
+  border: 1.5px solid #dd4b39;
+}
+
+
+input.ng-valid{
+  border: 1.5px solid green;
+}
+
+textarea.ng-valid{
+  border: 1.5px solid green;
+}
+.search{
+	    border: 1px solid #ccc !important;
+}
+
+.custom {
+	border: 1px solid #dd4b39 !important;
+}
+
+
+.alt {
+	background-color:#e0e0e0;
+}
+
+.btn-success {
+	color: white !important;
+    background-color: #00a65a!important;
+}
+
+.table td  {
+  padding: 5px !important;
+}
+
+
+.selected {
+    background-color:black !important;
+    color:white;
+    font-weight:bold;
+}
+
+
+
+@import "compass/css3";
+
+
+/* text recolor */
+h1, p, a {
+  color: #4DC9C9 !important;
+}
+
+/* button recolor */
+.nav-pills > li.active > a, .btn-primary {
+  background-color: #6C6C6C !important;
+  border-color: #6C6C6C !important;
+  border-radius: 25px;
+}
+td .glyphicon  {
+  cursor: pointer;
+}
+
+td .fa{
+  cursor: pointer;
+}
+.fa {
+  cursor: pointer;
+}
+
+.content-header>h1 {
+  font-size: 19px;
+  padding: 10px; padding: 0px;
+}
+
+/*.content-header>h1 {
+  font-size: 19px !important;
+  font-weight: bold;
+}*/
+
+.sorting_asc:hover {
+    background-color: green !important;
+}
+.table-hover > tbody > tr:hover {
+    background-color: green !important;
+  }
+
+/*.table-hover > tbody > tr:hover {*/
+    /*background-color: green !important;*/
+  /*}*/
+.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th{
+  background-color:transparent !important;
+}
+.select2-container, .select2-choice {
+  border-radius: 0px !important;
+}

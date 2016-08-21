@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+  <head>
+  <style>
+  .selected {
+      background-color:#337ab7;
+      color:white;
+  }
+  </style>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
+    <link rel="stylesheet" href="bower_components/ui-select/dist/select.css" />
+    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog.css" />
+    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-default.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <!-- FontAwesome 4.3.0 -->
+    <!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />-->
+    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="styles/AdminLTE.min.css" rel="stylesheet"  />
+    <link href="styles/css/font-awesome.css" rel="stylesheet"  />
+    <link href="styles/skins/_all-skins.min.css" rel="stylesheet"  />
+    <link rel="stylesheet" href="styles/main.css">
+    <!--<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">-->
+  
+     <!-- <link rel="stylesheet" href="styles/bootstrap.css">   -->  <!-- nikolovskiF -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+
+
+    <!--<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">-->
+    <link rel="stylesheet" href="styles/select2.css">
+    <!--<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">-->
+    <link rel="stylesheet" href="styles/selectize.default.css">
+
+    <!-- endbuild -->
+  </head>
+
+  <body class="skin-black login-page" ng-app="adminBankaFrontendApp">
+
+
+  <div ng-view="" ng-controller="IndexCtrl"> </div>
+    <!-- Add your site or application content here -->
+
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
+    <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+    <script src="bower_components/ngMask/dist/ngMask.js"></script>
+    <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <script src="bower_components/angularUtils-pagination/dirPagination.js"></script>
+    <script src="bower_components/ui-select/dist/select.js"></script>
+    <script src="bower_components/ng-dialog/js/ngDialog.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+    <script src="bower_components/checklist-model/checklist-model.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+  <!-- build:js({.tmp,app}) scripts/scripts.js -->
+  <script src="scripts/app.js"></script>
+  <script src="scripts/controllers/index.js"></script>
+  <script src="scripts/controllers/main.js"></script>
+  <script src="scripts/controllers/about.js"></script>
+  <script src="scripts/controllers/vid-rabota.js"></script>
+  <script src="scripts/controllers/vid-rabota-create.js"></script>
+  <script src="scripts/controllers/header.js"></script>
+  <script src="scripts/controllers/login.js"></script>
+  <script src="scripts/controllers/tip-rabota-create.js"></script>
+  <script src="scripts/controllers/translate.js"></script>
+  <script src="scripts/controllers/dirSearchTipVid.js"></script>
+  <script src="scripts/controllers/adminBaranja.js"></script>
+  <script src="scripts/controllers/generateForm.js"></script>
+  <script src="scripts/controllers/vnesuvanjeKomitenti.js"></script>
+  <script src="scripts/controllers/odobruvanjeBaranje.js"></script>
+  <script src="scripts/controllers/partii.js"></script>
+
+  <script src="scripts/services/gateway.js"></script>
+  <script src="scripts/services/authentication.js"></script>
+  <script src="scripts/services/utility.js"></script>
+  <script src="scripts/directives/dir-paginate.js"></script>
+  <script src="scripts/directives/dirSearchTipVid.js"></script>
+  <script src="scripts/directives/dropdown.js"></script>
+  <script src="scripts/directives/dirdinamycform.js"></script>
+  <script src="scripts/directives/searchkomitent.js"></script>
+  <!-- endbuild -->
+
+
+  <div ng-controller="langCtrl"></div>
+
+  </body>
+</html>

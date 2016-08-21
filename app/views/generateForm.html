@@ -1,0 +1,167 @@
+<style>
+  .row{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 2px;
+  }
+  .btn{
+    margin-top: 5px;
+  }
+  label{
+    text-align: right;
+  }
+</style>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+
+
+<section class="wrapper"  >
+  <ng-include src="'views/header.html'"></ng-include>
+
+  <div class="content-wrapper">
+    <div class="content-header" >
+      <search-vid-tip > </search-vid-tip>
+      <h1 style=" font-size: 19px;padding: 10px; padding-top: 0px"> Креирај форма </h1>
+
+    </div>
+
+    <div class="content">
+
+
+
+      <div class="box box-success">
+        <div class="box-header with-border">
+
+          <h4 class="box-title">
+              {{opis}}
+          </h4>
+
+        </div>
+
+        <form novalidate name="form">
+        <div class="box-body" >
+          <div   ng-repeat="item in productsBody track by item.FieldID ">
+          <!--************************************* Textbox ***************************************************-->
+                  <div class="row "    ng-if="item.FieldType=='oTextBox' ">
+                      <label class=" col-md-2 control-label " >{{item.FieldDescription}}</label>
+                      <div class="col-md-2 ">
+                        <input class="form-control ng-touched ng-invalid ng-valid input-sm " ng-required="{{item.Mandatory=='М'}}" dynamic-model="'temp.'+item.FieldName" type="{{item.FieldType}}" maxlength="{{item.FieldLength}}" value="{{item.DefaultValue}}" />
+                      </div>
+                  </div>
+
+          <!--************************************** Number *********************************************-->
+                  <div class="row "    ng-if="item.FieldType=='Number' ">
+
+                    <label class=" col-md-2 control-label ">{{item.FieldDescription}}</label>
+                    <div class="col-md-2 ">
+                      <input class="form-control ng-touched ng-invalid ng-valid " ng-required="{{item.Mandatory=='М'}}" dynamic-model="'temp.'+item.FieldName"  type="{{item.FieldType}}" min="0" maxlength="{{item.FieldLength}}" value="{{item.DefaultValue}}" />
+                    </div>
+                  </div>
+          <!--*********************************** Input-Number *****************************************-->
+                  <div class="row "  ng-if="item.FieldType=='Input-Number' ">
+                    <label class=" col-md-2 control-label ">{{item.FieldDescription}}</label>
+                    <div class="col-md-2 ">
+                      <input class="form-control ng-touched ng-invalid ng-valid" ng-required="{{item.Mandatory=='М'}}" dynamic-model="'temp.'+item.FieldName"  type="text" mask="9"  restrict="reject"  repeat="{{item.FieldLength}}"   />
+                    </div>
+                  </div>
+
+
+          <!--************************************** Datepicker ********************************88-->
+                  <div class="row"    ng-if="item.FieldType=='oDatepicker' ">
+
+                    <label class=" col-md-2 control-label ">{{item.FieldDescription}}</label>
+                    <div class="col-md-2 ">
+                      <div class=" input-group ">
+                        <input  dynamic-model="'temp.'+item.FieldName" ng-required="{{item.Mandatory=='М'}}" class="form-control ng-touched ng-invalid ng-valid" type="{{item.FieldType}}" ng-change="filter( item.FieldName )"  container="body" data-date-format="dd-MM-yyyy" data-date-type="date" data-autoclose="1" bs-datepicker />
+                        <div class="input-group-addon " id="date" >
+                          <i class="fa fa-calendar"  ></i>
+                        </div>
+                      </div>
+                   </div>
+                  </div>
+
+          <!-- Textarea -->
+                  <div class="row "ng-model="item.FieldName"  ng-if="item.FieldType=='oTextarea' ">
+
+                    <label class=" col-md-2 control-label ">{{item.FieldDescription}}</label>
+                    <div class="col-md-2 ">
+                      <textarea class="form-control ng-touched ng-invalid ng-valid" ng-required="{{item.Mandatory=='М'}}" dynamic-model="'temp.'+item.FieldName" rows="3"   ></textarea>
+                    </div>
+                  </div>
+
+          <!-- Checkbox-->
+                  <div class="row "  ng-if="item.FieldType=='oCheckBox' ">
+
+                    <label class=" col-md-2 control-label ">{{item.FieldDescription}}</label>
+                    <div class="col-md-1 ">
+                      <input  dynamic-model="'temp.'+item.FieldName"   type="checkbox"  >
+                    </div>
+
+                  </div>
+
+          <!-- Dropdown -->
+                  <div class="row "  ng-if="item.FieldType=='oDropDown' ">
+
+                    <label class=" col-md-2 control-label">{{item.FieldDescription}}</label>
+                    <div class="col-md-3 " >
+
+                     <ui-select dynamic-model="'temp.'+item.FieldName" ng-required="{{item.Mandatory=='М'}}" style="width: 267px;" ng-model="temp"  theme="select2"  >
+
+                        <ui-select-match placeholder="{{item.DefaultValue}}"></ui-select-match>
+
+                          <ui-select-choices repeat="temp in item.ControlType  | filter: $select.search">
+
+                            <div ng-repeat="tmp in temp">
+                              <div ng-bind-html="tmp |  highlight: $select.search"></div>
+                            </div>
+
+                          </ui-select-choices>
+                      </ui-select>
+
+                    </div>
+
+                  </div>
+
+            <!-- Buttons-->
+
+            <div class="col-md-4"   ng-if=" item.FieldType=='oButtonCancel' ">
+              <div class="pull-right"  >
+                <button class="btn btn-default" value="{{item.DefaultValue}}" ><i class="fa fa-fw fa-ban"></i>{{item.DefaultValue}}</button>
+
+              </div>
+            </div>
+            <div class="col-md-2" style="padding-left: 0px;"  ng-if=" item.FieldType=='oButtonSuccess' ">
+              <div class="pull-left" >
+                <button class="btn btn-success " ng-disabled="form.$invalid" ng-click="submit(item.FillApi)" style="background-color: #00a65a; "   value="{{item.DefaultValue}}" ><i class="fa fa-fw fa-save"></i> {{item.DefaultValue}}</button>
+
+              </div>
+            </div>
+
+
+
+
+
+          </div>
+
+
+        </div>
+        </form>
+
+
+
+      </div>
+
+
+
+    </div>
+  </div>
+
+</section>
+
+
+
+
+
+</body>
+</html>

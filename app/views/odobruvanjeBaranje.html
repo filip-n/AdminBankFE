@@ -1,0 +1,132 @@
+
+<script type="text/ng-template" id="templateid" ng-controller="odobruvanjeBaranjaCtrl">
+
+  <div>
+    <form name="formSmetka">
+      <div id="info">
+        <h3>Информации за најава на системот за електронско банкарство:</h3>
+        <label>Корисничко име: {{baranje.KorisnickoIme}} </label><br/>
+        <label>Лозинка: {{password}}</label>
+      </div>
+
+
+      <div class="text-right">
+        <!--<button style="margin-top: 10px;margin-left: 264px;" ng-model="btn2" class="btn btn-warning"  ng-click="closeThisDialog()" >Откажи </button>-->
+        <button style="margin-top: 10px;" class="btn btn-success" ng-model="btn1" ng-click="printDiv('info');closeThisDialog()"><i class="fa fa-print" aria-hidden="true"></i> Печати</button>
+
+      </div>
+    </form>
+  </div>
+
+</script>
+<section class="wrapper" >
+
+  <ng-include src="'views/header.html'"></ng-include>
+  <!-- Content Header (Page header) -->
+
+  <div class="content-wrapper">
+
+    <div class="content-header" >
+      <h1 >Одобрување на барања</h1>
+    </div>
+
+    <div class="content" >
+
+      <div class=" box box-success  ">
+        <div class="box-header with-border">
+          <h3 class="box-title">Внесени барања</h3>
+        </div>
+
+        <div class=" box-body" >
+
+          <div class="row">
+            <form novalidate class="css-form" name="form">
+              <div class="col-md-12">
+
+                  <search-Komitent ></search-Komitent>
+
+
+                <!--<div class="form-group col-md-2">-->
+
+                      <!--<label >Единствен број:</label>-->
+                  <!--</div>-->
+
+                  <!--<div class="form-group col-md-2">-->
+                    <!--<input  type="text" class=" input-sm ng-valid ng-invalid form-control" mask="9" repeat="13" restrict="reject" required  ng-model="obj.EdinstvenBroj"  ng-blur="checkEMBG()" />-->
+                  <!--</div>-->
+                <!--</div>-->
+
+
+
+              </div>
+
+              <div class=" row col-md-12 box-header pull-right ">
+                <!-- <button class="btn btn-default text-right pull-right btn-sm" style="color: white;background-color: #00a65a; float:right; width: 75px;" ng-click="" ng-disabled="">  Сними </button> -->
+                <button class="tn btn-default text-right pull-right btn-sm" style="color:white; background-color: #3c8dbc; float:right; margin-right: 15px;" ng-click="prikaziBaranja(EdinstvenBroj); " ng-disabled="form.$invalid">  Прикажи </button>
+              </div>
+
+            </form>
+
+            <div class="col-md-12 box-header " ng-show="flagVisibility">
+              <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                <tr style="background-color: #00A65A;color: white;">
+                  <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Број на барање</th>
+                  <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Партија</th>
+                  <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Корисничко име</th>
+                  <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Датум барање</th>
+                  <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Статус</th>
+
+
+                </tr>
+
+                <!--  ************** REDOVI VO TABELA TUKA *********************************       -->
+                <tbody >
+                <tr ng-repeat=" y in baranja" ng-class="{'selected':$index == selectedRow}"  ng-click="setClickedRow($index); previewForEdit(y);productsFetch(y);">
+                  <td >{{y["BrojBaranje"]}} </td>
+                  <td >{{y["Partija"]}} </td>
+                  <td >{{y["KorisnickoIme"]}} </td>
+                  <td >{{y["DatumInsert"]}} </td>
+                  <td >{{y["StatusBaranje"]}} </td>
+                </tr>
+
+                </tbody>
+                <tr ng-show="vnesipodatoci" ><td colspan="5" align="center">Внесете податоци за пребарување</td></tr>
+                <tr ng-show="nemapodatoci" ><td colspan="5" align="center">Нема неодобрени барања</td></tr>
+
+              </table>
+              <img id="mySpinner"  src="/images/loading.gif" style="width: 100px;height: 100px; margin-top: -17px;margin-left: 41%;" ng-show="loading"/>
+            </div>
+
+            <span ng-show="showDir">
+
+            <div ng-repeat="item in products"  style="margin-left:18px">
+
+              <dir-Dinamyc-Form  ng-model="finalno"  value='item.ProductID' type="item.ProductTypeID" desc="item.Description" disableall="true" ></dir-Dinamyc-Form>
+              <br/>
+            </div>
+            </span>
+
+          </div>
+
+
+
+
+          <div class=" row col-md-12 pull-right box-header "  ng-show="showDir">
+            <button class="btn btn-success text-right btn-sm" style="float:right; margin-right: 15px;" ng-click="odobriBaranje()" ng-disabled="!flagDisableButtons">Одобри</button>
+            <button class="btn btn-success text-right btn-sm" style="float:right; margin-right: 15px;" ng-disabled="flagDisableButtons" ng-click="randomPassword(10);popUp()">Печати лозинка</button>
+            <button class="btn btn-success text-right btn-sm" style="float:right; margin-right: 15px;" ng-disabled="flagDisableButtons">Печати дог. сертификат</button>
+            <button class="btn btn-success text-right btn-sm" style="float:right; margin-right: 15px;" ng-disabled="flagDisableButtons">Печати договор</button>
+
+          </div>
+          <div class=" row col-md-12 pull-right box-header "  ng-show="showButtons">
+            <button class="btn btn-success text-right btn-sm" style="float:right; margin-right: 15px;" ng-click="ukiniBaranje()" ng-disabled="">Укини</button>
+          </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

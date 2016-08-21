@@ -1,0 +1,212 @@
+
+<script type="text/ng-template" id="templateId" ng-controller="adminBaranjaCtrl">
+
+		<div>
+			<form name="formSmetka">
+        		<label>Сметка:</label>
+	        	<div>
+		        	<input  type="text" class=" input-sm ng-valid ng-invalid form-control" required ng-change="getInfo(novPotpisnikPartija);setirajFlagPotpisnik()" ng-model="novPotpisnikPartija" mask-restrict="reject" mask="999999999999999" ng-blur="setFlagToPrikazhi()" ></input>
+              {{info}}
+		        </div>
+
+		        <div>
+		        	<button style="margin-top: 10px;margin-left: 264px;" ng-model="btn2" class="btn btn-warning"  ng-click="closeThisDialog()" >Откажи </button>
+		        	<button style="margin-top: 10px;" class="btn btn-success" ng-model="btn1" ng-click="dodadiSmetka();closeThisDialog()"  ng-disabled="potpisnikFlag || formSmetka.$invalid" >Додади</button>
+
+		        </div>
+			</form>
+      </div>
+
+  </script>
+
+
+<section class="wrapper" ng-controller="adminBaranjaCtrl">
+
+  <ng-include src="'views/header.html'"></ng-include>
+  <!-- Content Header (Page header) -->
+
+  <div class="content-wrapper">
+
+	<div class="content-header" >
+		<h1 > Внесување на барања </h1>
+	</div>
+
+	 <div class="content" >
+
+    	 <div class=" box box-success  ">
+          <div class="box-header with-border">
+            <h3 class="box-title">Сними барање</h3>
+          </div>
+
+			<div class=" box-body" >
+        <div class="row">
+			  <form novalidate  name="form">
+						<div class="col-md-12 "  >
+              <div class="row ">
+                <div class="col-lg-6">
+                  <div class="input-group">
+                    <div class="input-group-btn">
+                      <button type="button"  class="btn btn-default dropdown-toggle "  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{{valueForSearch}}<span class="caret"></span></button>
+
+                      <ul class="dropdown-menu">
+                      <li><a ng-click="changeValue(0)">Единствен број</a></li>
+                      <li><a  ng-click="changeValue(1)">Име/Назив/Презиме</a></li>
+                      </ul>
+                    </div>
+                    <input placeholder="Пребарај..." ng-model="SearchValue" ng-show="a"   type="text" class="form-control ng-invalid-required" mask="9" repeat="13" restrict="reject" required>
+                    <input placeholder="Пребарај..." ng-model="SearchValue" ng-show="!a"   type="text" class="form-control ng-invalid-required" required >
+                    <div class="input-group-addon " id="date" >
+
+                    <i class="fa fa-search" ng-click="searchRecord(SearchValue)" data-placement="bottom"  data-trigger="focus"   bs-tooltip="tooltip"></i>
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+
+                <div class="col-md-6 form-group">
+                  <select class="form-control ng-touched ng-invalid ng-valid ng-pristine ng-empty" ng-change="fetchKomitent(Komitent)"  ng-model="Komitent" ng-disabled="">
+                    <option></option>
+                    <option ng-repeat="komitent in Komitenti" value="{{komitent}}" >{{komitent.EdinstvenBroj}}-{{komitent.ImeNaziv}} {{komitent.Prezime}} {{komitent.Mesto}}</option>
+                  </select>
+
+                </div>
+              </div>
+              <div class="row">
+							<div class="col-md-3 form-group ">
+                <label >Име и презиме:</label>
+                <input type="text" class="input-sm form-control" ng-model="KorisnikPrikazInfo.ImePrezime" style ="border: 1px solid rgba(128, 128, 128, 0.22); background-color: #f4f4f4;"  ng-disabled="flag" />
+              </div>
+
+							<div class="col-md-3 form-group ">
+                <label >Лична карта:</label>
+                <input type="text" class="input-sm form-control" ng-model="KorisnikPrikazInfo.BrLicnaKarta"  style ="border: 1px solid rgba(128, 128, 128, 0.22); background-color: #f4f4f4;" ng-disabled="flag" />
+              </div>
+
+							<div class="col-md-3 form-group ">
+                <label >Адреса:</label>
+                <input type="text" class="input-sm form-control" ng-model="KorisnikPrikazInfo.Adresa" style ="border: 1px solid rgba(128, 128, 128, 0.22); background-color: #f4f4f4;" ng-disabled="flag" />
+              </div>
+              <div class="col-md-3 form-group ">
+                <label >Тел/Моб: </label>
+                <input type="text" class="input-sm form-control" ng-model="KorisnikPrikazInfo.TelefonskiBroj" style ="border: 1px solid rgba(128, 128, 128, 0.22); background-color: #f4f4f4;" ng-disabled="flag" />
+              </div>
+              </div>
+
+
+              <div class=" row  " >
+
+                  <div class=" col-md-6">
+                        <label >Тип на продукт:</label>
+
+                        <select class="form-control ng-touched ng-invalid ng-valid ng-pristine ng-empty" ng-change="zemiSelektiranTipNaProdukt(selectiranTip);"  ng-model="selectiranTip" ng-disabled="" required>
+                                  <option></option>
+                                  <option ng-repeat="productType in productTypes" value="{{productType.ProductTypeID}}" >{{productType.ProductTypeID}}-{{productType.Description}}</option>
+                        </select>
+
+                  </div>
+              </div>
+
+            </div>
+		        		<div class="col-md-12 box-header with-border "></div>
+
+			        	<div class=" row col-md-12 box-header pull-right ">
+			        		<button class="btn btn-default text-right pull-right btn-sm" style="color:white; background-color: #3c8dbc; float:right; margin-right: 15px;" ng-click="zemiPodatociPo_EMBG(Korisnik.EdinstvenBroj); setVisibility();zemiPodatoci_CORE(Korisnik.EdinstvenBroj)" ng-disabled="Flag_Prikazhi || flagSelektiranTip">  Прикажи </button>
+			        	</div>
+
+			        </form>
+	        	<!--************** KRAJ NA FORMA ZA PODATOCI ******************************-->
+
+          <div class="col-md-12">
+          <div class="row" ng-show="flagVisibilityTabs">
+
+            <div class=" col-md-3 form-group">
+            <label >Број на барање:</label>
+            <input type="text" class=" input-sm form-control" ng-model="KorisnikPrikazInfo.BrBaranje" style ="border: 1px solid rgba(128, 128, 128, 0.22); background-color: #f4f4f4;" ng-disabled="flag"/>
+            </div>
+
+            <div class="col-md-3">
+            <label >Датум барање:</label>
+            <input type="text" class=" input-sm form-control" ng-model="KorisnikPrikazInfo.DatumInsert" ng-disabled="flag" style ="border: 1px solid rgba(128, 128, 128, 0.22); background-color: #f4f4f4;"/>
+            </div>
+
+            <div class="col-md-3 form-group">
+            <label >Корисничко име:</label>
+            <input type="text" class=" input-sm form-control" ng-model="KorisnikPrikazInfo.korisnichkoIme"  style ="border: 1px solid rgba(128, 128, 128, 0.22); " required/>
+
+            </div>
+          </div>
+        </div>
+				<!--  ************** TABELA ZA PRIKAZ NA PODATOCI PO SMETKA - FORMA ZA VNES NA  EMBG**********-->
+		        		<div class="col-md-12 box-header " ng-show="flagVisibilityTabs">
+		        			<table id="example2" class="table table-bordered table-hover dataTable" setNullSelectionAllowed="false" role="grid" aria-describedby="example2_info">
+		        			<tr style="background-color: #00A65A;color: white;">
+		        				<th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Тип на продукт</th>
+
+		        				<th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Вид на работа</th>
+
+		        				<th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Партија</th>
+
+		        				<th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Назив на сметка</th>
+
+		        				<!-- <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Функција</th>
+
+		        				<th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Сервис</th>
+
+		        				<th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Сервис привилегија</th>
+
+		        				<th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Вид апликација</th>
+
+		        				<th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Е-маил</th> -->
+
+		        			<!-- 	<th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Телефонски број</th> -->
+		        			</tr>
+
+		        				<!--  ************** REDOVI VO TABELA TUKA *********************************       -->
+		        			<tbody >
+		        				<tr ng-repeat=" y in final" ng-class="{'selected':$index == selectedRow}"  ng-click="productsFetch(selectiranTip);setClickedRow($index); previewForEdit(y) " ng-if="getDigit(y)" > <!-- ng-if="getPrviDve(y.ProductTypeId) == prvidve" -->
+		        					<td >{{y["ProductTypeID"]}} </td>
+		        					<td >{{y["ProductID"]}} </td>
+		        					<td >{{y["Partija"]}} </td>
+		        					<td >{{y["NazivPartija"]}} </td>
+		        				</tr>
+
+		        			</tbody>
+
+		        		</table>
+		        		<img id="mySpinner"  src="/images/loading.gif" style="width: 100px;height: 100px; margin-top: -17px;margin-left: 41%;" ng-show="loading"/>
+		        	</div>
+        			<div class=" row pull-right" ng-show="flagVisibilityTabs">
+						<button class="btn btn-default text-right btn-sm box-header with-border" style="`color:white; background-color: #337ab7;margin-right: 30px;margin-bottom: 20px; margin-top: -20px;" ng-click="popUp()" >  Додади сметка </button>
+					</div>
+
+
+          <div ng-repeat="item in products" ng-show="prikazNaFormaDinamichka" style="margin-left:18px">
+            <dir-Dinamyc-Form ng-show="showDir" ng-model="finalno" value='item.ProductID' type="item.ProductTypeID" desc="item.Description"></dir-Dinamyc-Form>
+            <br/>
+          </div>
+					<!--<div ng-repeat="item in products" ng-show="showDir" style="margin-left:18px">-->
+					    <!--<dir-Dinamyc-Form  ng-model="finalno"  value='item.ProductID' type="item.ProductTypeID" desc="item.Description"></dir-Dinamyc-Form>-->
+					    <!--<br/>-->
+					<!--</div>-->
+
+
+					<!--<div class=" row col-md-12  text-right box-header "  ng-show="prikazNaFormaDinamichka">-->
+            <!--<button ng-click="cancel()" class="btn btn-default btn-sm" >Откажи</button>-->
+            <!--<button class="btn btn-success btn-sm" style="float:right; margin-right: 15px;" ng-click="snimiBaranje()" ng-disabled="">  Сними барање </button>-->
+					<!--</div>-->
+          <div class=" row col-md-12 pull-right box-header "  ng-show="showDir">
+            <button class="btn btn-success text-right btn-sm" style="float:right; margin-right: 15px;" ng-click="snimiBaranje()" ng-disabled="">  Сними барање </button>
+
+            <button ng-click="cancel()" style="float:right; margin-right: 15px;" class="btn btn-default text-right btn-sm" >Откажи</button>
+
+          </div>
+			</div>
+      </div>
+		</div>
+	</div>
+</div>
+</section>
+

@@ -1,0 +1,304 @@
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+<section class="wrapper">
+  <ng-include src="'views/header.html'"></ng-include>
+
+  <div class="content-wrapper">
+    <div class="content-header" >
+
+      <h1>Внесување на комитенти</h1>
+
+    </div>
+
+    <div class="content">
+
+
+
+      <div class="box box-success">
+        <div class="box-header with-border">
+
+          <h3 class="box-title">
+            {{'headerSnimiZapis_p' | translate}}
+          </h3>
+
+        </div>
+
+
+        <div class="box-body">
+          <div class="row">
+            <form novalidate   name="form">
+
+              <div class="col-md-12 ">
+                <!--<form novalidate  class="css-form" name="form">-->
+
+              <div class="row">
+
+                <div class="form-group col-md-3">
+                  <label>Вид на комитент</label>
+                  {{Komitent.VidKomitent}}
+                  <ui-select ng-blur="checkVidKomitent()" ng-model="Komitent.VidKomitent" class="pull-right" style="min-width: 260px; height: 30px"  theme="select2"  on-select="disableFields()" required>
+                    <ui-select-match > {{$select.selected.desc}}</ui-select-match>
+                    <ui-select-choices repeat="item.id as item in vidKomitent | filter: $select.search">
+                      <small>
+                        <spam  ng-bind-html="item.desc  | highlight: $select.search"></spam>
+                      </small>
+                    </ui-select-choices>
+                  </ui-select>
+                </div><!-- /.form-group -->
+
+                <div class="form-group col-md-3">
+                  <label>Единствен број</label>
+                  <input  ng-blur="checkEdinstvenBroj()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm"     ng-model="Komitent.EdinstvenBroj" required>
+                </div><!-- /.form-group -->
+
+
+                <div class="form-group col-md-3">
+                  <label>{{ImeNaziv}}</label>
+                  <input ng-blur="checkImeNaziv()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm"  ng-model="Komitent.ImeNaziv"   required>
+                </div><!-- /.form-group -->
+
+
+                <div class="form-group col-md-3">
+                  <label>Презиме</label>
+                  <input ng-disabled="isActive" ng-blur="checkVid()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm"  ng-model="Komitent.Prezime" >
+                </div><!-- /.form-group -->
+            </div>
+
+            <div class="row">
+
+              <div class="form-group col-md-3">
+                <label>Име на родител</label>
+                <input ng-disabled="isActive" ng-blur="checkVid()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm"  ng-model="Komitent.Roditel" data-placement="bottom" data-type="success" data-container="body" data-trigger="focus" bs-tooltip="tooltip" >
+              </div><!-- /.form-group -->
+
+
+
+                <div class="form-group col-md-1">
+                  <label>Пол</label>
+                  <ui-select ng-disabled="isActive" ng-model="Komitent.Pol" class="pull-right" style="width: 70px; height: 30px"  theme="select2"  on-select="">
+                    <ui-select-match >{{$select.selected.Pol}}</ui-select-match>
+                    <ui-select-choices repeat="item in vidPol | filter: $select.search">
+                      <small>
+                        <spam  ng-bind-html="item.Pol  | highlight: $select.search"></spam>
+                      </small>
+                    </ui-select-choices>
+                  </ui-select>
+
+                </div><!-- /.form-group -->
+
+
+                    <div class="form-group col-md-2" >
+                      <label>Датум на раѓање</label>
+                      <div class="input-group" >
+                        <input ng-disabled="isActive"  type="text" class="form-control input-sm" ng-model="Komitent.DatumRaganje" placement="auto" container="body" data-date-format="dd-MM-yyyy" data-date-type="date"  data-autoclose="1" name="date2" bs-datepicker>
+                        <div class="input-group-addon " id="date1" >
+                          <i class="fa fa-calendar"  ></i>
+                        </div>
+                      </div><!-- /.input group -->
+                    </div>
+
+
+
+                  <div class="form-group col-md-3">
+                    <label>Место на раѓање</label>
+                    <input ng-disabled="isActive" ng-blur="checkVid()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm" ng-model="Komitent.MestoRaganje" >
+                  </div><!-- /.form-group -->
+
+                  <div class="form-group col-md-3">
+                    <label>Адреса</label>
+                    <input ng-blur="checkAdresa()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm"     ng-model="Komitent.Adresa"  required>
+                  </div><!-- /.form-group -->
+
+                </div>
+              <div class="row">
+                <div class="form-group col-md-3">
+                  <label>Држава</label>
+                  <input type="text" class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm" ng-blur="placesFetch(Komitent.Drzava.Name)"  ng-model="Komitent.Drzava" bs-options=" state.Name  for state in states" bs-typeahead required>
+                </div><!-- /.form-group -->
+
+
+                  <div class="form-group col-md-3">
+                    <label>Место на живеење</label>
+                    <input type="text" class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm" ng-blur="municipalityFetch(Komitent.Mesto.Place)"  ng-model="Komitent.Mesto"  bs-options="place.Place for place in places"  bs-typeahead required>
+                  </div><!-- /.form-group -->
+
+                <div class="form-group col-md-3">
+                  <label>Општина</label>
+                  <input type="text" class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm"ng-model="Komitent.Opstina"  bs-options="municipality for municipality in municipalities"  bs-typeahead>
+
+                  <!--<input ng-blur="checkOpstina()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm"     ng-model="Komitent.Opstina"  required>-->
+                </div><!-- /.form-group -->
+
+
+
+
+                  <div class="form-group col-md-3">
+                    <label>Поштенски код</label>
+                    <input ng-blur="checkVid()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm"  ng-model="Komitent.PostenskiBroj" >
+                  </div><!-- /.form-group -->
+              </div>
+                <div class="row">
+                  <div class="form-group col-md-3">
+                    <label>Телефон</label>
+                    <input ng-blur="checkVid()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm"  ng-model="Komitent.Telefon" >
+                  </div><!-- /.form-group -->
+
+                  <div class="form-group col-md-3">
+                    <label>Мобилен</label>
+                    <input ng-blur="checkVid()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm" ng-model="Komitent.Mobilen"  >
+                  </div><!-- /.form-group -->
+
+                  <div class="form-group col-md-3">
+                    <label>Емаил</label>
+                    <input ng-blur="checkVid()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm"  ng-model="Komitent.Email" >
+                  </div><!-- /.form-group -->
+
+                  <div class="form-group col-md-3">
+                    <label>Факс</label>
+                    <input ng-blur="checkVid()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm"  ng-model="Komitent.Fax" >
+                  </div><!-- /.form-group -->
+              </div>
+                <div class="row">
+
+                  <div class="form-group col-md-3">
+                    <label>Матичен број фирма</label>
+                    <input ng-blur="checkVid()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm"  ng-model="Komitent.MaticenBrojFirma" >
+                  </div><!-- /.form-group -->
+
+                  <div class="form-group col-md-3">
+                    <label>Број на лична карта</label>
+                    <input  ng-disabled="isActive" ng-blur="checkVid()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm"  ng-model="Komitent.BrLicnaKarta" >
+                  </div><!-- /.form-group -->
+
+                  <div class="form-group col-md-3">
+                    <label>Број на пасош</label>
+                    <input  ng-disabled="isActive" ng-blur="checkVid()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm"  ng-model="Komitent.BrojPasos" >
+                  </div><!-- /.form-group -->
+
+                  <div class="form-group col-md-3">
+                    <label >Опис</label>
+                    <br/>
+                    <!-- <input type="text" class="form-control" id="inputSuccess" placeholder="Опис ..." ng-model="Products.Description">-->
+                    <textarea ng-blur="checkOpis()" class="form-control ng-touched ng-invalid-required ng-valid" rows="3"   ng-model="Komitent.Opis" ></textarea>
+                  </div><!-- /.form-group -->
+
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-3">
+                      <label>Корисничко име</label>
+                      <input ng-blur="checkVid()" type="text"  class=" form-control ng-pristine  ng-invalid-required ng-touched input-sm" ng-model="Komitent.KorisnickoIme" >
+                    </div><!-- /.form-group -->
+                  <div class="form-group col-md-1">
+                    <label>Статус</label>
+
+                    <div class="checkbox" style="padding-left: 0px ;margin-top: 0px">
+                      <label>
+                        <input  ng-model="Komitent.Status"  ng-checked="true" type="checkbox" >    {{'lblAktiven_p' | translate}}
+                      </label>
+                    </div>
+                  </div><!-- /.form-group -->
+
+
+
+                </div>
+
+
+
+
+
+              <div class="form-horizontal col-md-12" style="padding-right: 0px">
+                <div class="box-footer  text-right"  >
+
+                  <button ng-click="cancel()" class="btn btn-default btn-sm" ><i class="fa fa-fw fa-ban"></i>{{'btnOtkazi_p' | translate}}</button>
+                  <button ng-disabled="form.$invalid" class="btn btn-success btn-sm"  style="background-color: #00a65a; " ng-click="insertKomitent();Cancel()"><i class="fa fa-fw fa-save"></i> {{'btnSnimi_p' | translate}}</button>
+
+                </div>
+              </div>
+
+            </div>
+            </form>
+          </div><!-- /.box-body -->
+
+        </div><!-- /.box -->
+      </div>
+
+
+
+      <div class=" box box-success">
+        <div class="box-header with-border">
+          <div class="col-md-4 pull-right " style="margin-right: -30px;">
+
+            <div class="input-group">
+              <div class="input-group-btn" style="width: 128px">
+                <button type="button " style="width: 128px" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{valueForSearch}}<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a ng-click="changeValue(0)">Единствен број</a></li>
+                  <li><a  ng-click="changeValue(1)">Име или презиме</a></li>
+                </ul>
+              </div><!-- /btn-group -->
+              <div class="input-group " >
+                <input type="text" class="input-sm" placeholder="Пребарај..." ng-model="SearchValue" class="form-control" aria-label="...">
+                <div class="input-group-addon " id="date" >
+                  <i class="fa fa-search" ng-click="searchRecord(SearchValue)"></i>
+                </div>
+              </div><!-- /.input group -->
+
+
+            </div><!-- /input-group -->
+
+          </div><!-- /.col-lg-6 -->
+
+          <h4 class="box-title">
+           Преглед на записи
+          </h4>
+        </div>
+
+
+        <div class="box-body">
+          <div class="row">
+
+            <div class="form-horizontal col-lg-12 ">
+
+              <table class="table table-hover table-bordered">
+                <thead style="background-color: #00a65a;color: white;">
+                  <th class="col-md-3">Вид комитент</th>
+                  <th class="col-md-3">Единствен број</th>
+                  <th class="col-md-3"> Име </th>
+                  <th class="col-md-3">Презиме</th>
+                </thead>
+                <tr  dir-paginate=" item in Komitenti  | itemsPerPage:5 " ng-class="{'selected':$index == selectedRow}"  ng-click="setClickedRow($index); previewForEdit(item);">
+                  <td style="padding-left: 10px !important" ng-model="KomitentNew.VidKomitent"> {{item.VidKomitent}}</td>
+                  <td  ng-model="KomitentNew.EdinstvenBroj"> {{item.EdinstvenBroj}}</span> </td>
+                  <td  ng-model="KomitentNew.ImeNaziv"> {{item.ImeNaziv}}</span> </td>
+                  <td  ng-model="KomitentNew.Prezime"> {{item.Prezime}}</span> </td>
+
+                </tr>
+
+
+
+                  </td>
+
+
+
+                </tr>
+
+              </table>
+
+            </div>
+
+
+          </div>
+        </div><!-- /.box-body -->
+      </div>
+
+
+    </div>
+  </div>
+
+  </div>
+</section>
+
+

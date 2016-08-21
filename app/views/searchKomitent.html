@@ -1,0 +1,51 @@
+ <div class="row ">
+        <div class="col-lg-6">
+          <div class="input-group">
+            <div class="input-group-btn">
+              <button type="button"  class="btn btn-default dropdown-toggle "  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{{valueForSearch}}<span class="caret"></span></button>
+
+              <ul class="dropdown-menu">
+                <li><a ng-click="changeValue(0)">Единствен број</a></li>
+                <li><a  ng-click="changeValue(1)">Име/Назив/Презиме</a></li>
+              </ul>
+            </div>
+            <input placeholder="Пребарај..." ng-show="a" ng-model="SearchValue"  type="text" class="form-control ng-invalid-required" mask="9" repeat="13" restrict="reject" required>
+            <input placeholder="Пребарај..." ng-show="!a" ng-model="SearchValue"  type="text" class="form-control ng-invalid-required"required>
+
+
+            <div class="input-group-addon " id="date" >
+              <i class="fa fa-search" ng-click="searchRecord(SearchValue)" data-placement="bottom" data-type="success" data-container="body" data-trigger="focus" bs-tooltip="tooltip"></i>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-6 form-group">
+          <select class="form-control ng-touched ng-invalid ng-valid ng-pristine ng-empty" ng-change="fetchKomitent(Komitent)"  ng-model="Komitent" ng-disabled="">
+            <option></option>
+            <option ng-repeat="komitent in Komitenti" value="{{komitent}}" >{{komitent.EdinstvenBroj}}-{{komitent.ImeNaziv}} {{komitent.Prezime}} {{komitent.Mesto}}</option>
+          </select>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 form-group ">
+          <label >Име и презиме:</label>
+          <input type="text" class="input-sm form-control" ng-model="KorisnikPrikazInfo.ImePrezime" style ="border: 1px solid rgba(128, 128, 128, 0.22); background-color: #f4f4f4;"  ng-disabled="flag" ></input>
+        </div>
+
+        <div class="col-md-3 form-group ">
+          <label >Лична карта:</label>
+          <input type="text" class="input-sm form-control" ng-model="korisnik.BrLicnaKarta"  style ="border: 1px solid rgba(128, 128, 128, 0.22); background-color: #f4f4f4;" ng-disabled="flag" ></input>
+        </div>
+
+        <div class="col-md-3 form-group ">
+          <label >Адреса:</label>
+          <input type="text" class="input-sm form-control" ng-model="KorisnikPrikazInfo.Adresa" style ="border: 1px solid rgba(128, 128, 128, 0.22); background-color: #f4f4f4;" ng-disabled="flag" ></input>
+        </div>
+        <div class="col-md-3 form-group ">
+          <label >Тел/Моб: </label>
+          <input type="text" class="input-sm form-control" ng-model="KorisnikPrikazInfo.TelefonskiBroj" style ="border: 1px solid rgba(128, 128, 128, 0.22); background-color: #f4f4f4;" ng-disabled="flag" ></input>
+        </div>
+      </div>
+
